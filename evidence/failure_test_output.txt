@@ -1,0 +1,2 @@
+Response: {'original': 'hello ai system', 'processed': 'HELLO AI SYSTEM'}
+Failure Test Result: {'error': 'Invalid request type'}
