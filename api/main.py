@@ -24,3 +24,32 @@ def process_text(input: TextInput):
     conn.close()
 
     return {"original": input.text, "processed": processed}
+
+@app.get("/logs")
+def get_logs():
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    rows = cursor.execute("SELECT * FROM logs").fetchall()
+
+    conn.close()
+
+    return {"logs": rows}
+
+
+@app.get("/logs/{log_id}")
+def get_log_by_id(log_id: int):
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    row = cursor.execute(
+        "SELECT * FROM logs WHERE id = ?",
+        (log_id,)
+    ).fetchone()
+
+    conn.close()
+
+    if row is None:
+        return {"error": f"log with id {log_id} not found"}
+
+    return {"log": row}
